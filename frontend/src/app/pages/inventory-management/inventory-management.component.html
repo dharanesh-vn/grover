@@ -1,0 +1,87 @@
+<div class="management-container">
+  <div class="header-bar">
+    <h1>Inventory Management</h1>
+    <button (click)="showCreateForm()" class="btn-primary">Add New Item</button>
+  </div>
+
+  <!-- INVENTORY FORM (MODAL) -->
+  <div class="form-overlay" *ngIf="isFormVisible">
+    <div class="form-modal">
+      <h2>{{ isEditing ? 'Edit Item' : 'Create New Item' }}</h2>
+      <form [formGroup]="inventoryForm" (ngSubmit)="onSubmit()">
+        <div *ngIf="formErrorMessage" class="form-error-message">{{ formErrorMessage }}</div>
+
+        <div class="form-group">
+          <label for="itemName">Item Name</label>
+          <input type="text" id="itemName" formControlName="itemName" placeholder="e.g., Wheat Seeds">
+        </div>
+        
+        <div class="form-group">
+          <label for="category">Category</label>
+          <input type="text" id="category" formControlName="category" placeholder="e.g., Seeds, Fertilizer, Tool">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" formControlName="quantity" placeholder="e.g., 100">
+          </div>
+          <div class="form-group">
+            <label for="unit">Unit</label>
+            <input type="text" id="unit" formControlName="unit" placeholder="e.g., kg, liters, units">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="lowStockThreshold">Low Stock Alert Threshold</label>
+          <input type="number" id="lowStockThreshold" formControlName="lowStockThreshold">
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="hideForm()">Cancel</button>
+          <button type="submit" class="btn-primary" [disabled]="isSubmitting">
+            {{ isSubmitting ? 'Saving...' : (isEditing ? 'Update Item' : 'Save Item') }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- GENERAL ERROR & LOADING STATES -->
+  <div *ngIf="generalErrorMessage" class="general-error-message">{{ generalErrorMessage }}</div>
+  <div *ngIf="isLoading" class="loading-spinner">Loading inventory...</div>
+  <div *ngIf="!isLoading && inventory.length === 0 && !generalErrorMessage" class="no-data">
+    No items in inventory. Add a new item to get started.
+  </div>
+
+  <!-- INVENTORY TABLE -->
+  <div class="table-container" *ngIf="!isLoading && inventory.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Category</th>
+          <th>Quantity</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of inventory">
+          <td>{{ item.itemName }}</td>
+          <td>{{ item.category }}</td>
+          <td>{{ item.quantity }} {{ item.unit }}</td>
+          <td>
+            <span class="status" [ngClass]="item.quantity > item.lowStockThreshold ? 'in-stock' : 'low-stock'">
+              {{ item.quantity > item.lowStockThreshold ? 'In Stock' : 'Low Stock' }}
+            </span>
+          </td>
+          <td class="action-buttons">
+            <button class="btn-edit" (click)="showEditForm(item)">Edit</button>
+            <button class="btn-delete" (click)="onDelete(item._id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

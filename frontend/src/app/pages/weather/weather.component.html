@@ -1,0 +1,23 @@
+<div class="weather-container">
+<h2>Live Weather Forecast</h2>
+<p>Enter a city name to get the current weather conditions.</p>
+<form [formGroup]="weatherForm" (ngSubmit)="getWeather()" class="weather-form">
+<input type="text" formControlName="city" placeholder="Enter city name">
+<button type="submit" [disabled]="weatherForm.invalid || isLoading">
+{{ isLoading ? 'Searching...' : 'Get Weather' }}
+</button>
+</form>
+<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+<div *ngIf="weatherData" class="weather-card">
+<h3>{{ weatherData.city }}, {{ weatherData.country }}</h3>
+<div class="weather-main">
+<img [src]="weatherData.icon" alt="Weather icon">
+<div class="temperature">{{ weatherData.temperature | number:'1.0-0' }}°C</div>
+<div class="description">{{ weatherData.description }}</div>
+</div>
+<div class="weather-details">
+<p><strong>Feels Like:</strong> {{ weatherData.feels_like | number:'1.0-0' }}°C</p>
+<p><strong>Humidity:</strong> {{ weatherData.humidity }}%</p>
+</div>
+</div>
+</div>

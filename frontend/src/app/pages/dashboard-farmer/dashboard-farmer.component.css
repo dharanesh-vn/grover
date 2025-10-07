@@ -1,0 +1,19 @@
+.dashboard-container { max-width: 1200px; margin: 2rem auto; padding: 2rem; background-color: var(--white); border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+.dashboard-title { color: var(--olive-green); margin-top: 0; }
+.dashboard-subtitle { font-size: 1.1rem; color: var(--text-dark); }
+.general-error-message { background-color: #f2dede; color: var(--danger-red); padding: 1rem; border-radius: 5px; margin: 1rem 0; text-align: center; font-weight: 500; }
+.table-container { overflow-x: auto; margin-top: 2rem; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 0.9rem; text-align: left; border-bottom: 1px solid #eee; }
+thead { background-color: #f9f9f9; }
+th { font-weight: 600; color: var(--olive-green); }
+.no-data, .loading-spinner { text-align: center; padding: 3rem; font-size: 1.2rem; color: #888; }
+.status-select {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+}

@@ -1,0 +1,95 @@
+<p>task-management works!</p>
+<div class="management-container">
+  <div class="header-bar">
+    <h1>Task Management</h1>
+    <button (click)="showCreateForm()" class="btn-primary">Add New Task</button>
+  </div>
+
+  <!-- TASK FORM (MODAL) -->
+  <div class="form-overlay" *ngIf="isFormVisible">
+    <div class="form-modal">
+      <h2>{{ isEditing ? 'Edit Task' : 'Create New Task' }}</h2>
+      <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+        <div *ngIf="formErrorMessage" class="form-error-message">{{ formErrorMessage }}</div>
+
+        <div class="form-group">
+          <label for="taskDescription">Task Description</label>
+          <textarea id="taskDescription" formControlName="taskDescription" rows="3" placeholder="e.g., Water the wheat field"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="assignedTo">Assign To</label>
+          <select id="assignedTo" formControlName="assignedTo">
+            <option value="" disabled>Select a user</option>
+            <option *ngFor="let user of users" [value]="user._id">{{ user.name }} ({{ user.role }})</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="cropId">Related Crop</label>
+          <select id="cropId" formControlName="cropId">
+            <option value="" disabled>Select a crop</option>
+            <option *ngFor="let crop of crops" [value]="crop._id">{{ crop.cropName }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select id="status" formControlName="status">
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="dueDate">Due Date</label>
+          <input type="date" id="dueDate" formControlName="dueDate">
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="hideForm()">Cancel</button>
+          <button type="submit" class="btn-primary" [disabled]="isSubmitting">
+            {{ isSubmitting ? 'Saving...' : (isEditing ? 'Update Task' : 'Save Task') }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- GENERAL ERROR & LOADING STATES -->
+  <div *ngIf="generalErrorMessage" class="general-error-message">{{ generalErrorMessage }}</div>
+  <div *ngIf="isLoading" class="loading-spinner">Loading tasks...</div>
+  <div *ngIf="!isLoading && tasks.length === 0 && !generalErrorMessage" class="no-data">
+    No tasks found. Add a new task to get started.
+  </div>
+
+  <!-- TASKS TABLE -->
+  <div class="table-container" *ngIf="!isLoading && tasks.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Assigned To</th>
+          <th>Related Crop</th>
+          <th>Due Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks">
+          <td>{{ task.taskDescription }}</td>
+          <td>{{ task.assignedTo?.name || 'N/A' }}</td>
+          <td>{{ task.cropId?.cropName || 'N/A' }}</td>
+          <td>{{ task.dueDate | date:'mediumDate' }}</td>
+          <td><span class="status" [ngClass]="task.status.replace(' ', '-').toLowerCase()">{{ task.status }}</span></td>
+          <td class="action-buttons">
+            <button class="btn-edit" (click)="showEditForm(task)">Edit</button>
+            <button class="btn-delete" (click)="onDelete(task._id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

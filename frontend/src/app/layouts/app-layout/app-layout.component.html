@@ -1,0 +1,25 @@
+<div class="app-container">
+<!-- SIDEBAR NAVIGATION FOR INTERNAL PAGES -->
+<nav class="sidebar">
+<div class="sidebar-header">
+<a [routerLink]="dashboardLink || '/app/weather'" class="logo">Grover</a>
+</div>
+<ul class="sidebar-nav-links">
+<li><a [routerLink]="dashboardLink || '/app/weather'"><span class="icon"></span> Dashboard</a></li>
+<li><a routerLink="/app/weather"><span class="icon"></span> Weather</a></li>
+<!-- New Link: Inventory view for non-managers -->
+<li *ngIf="userRole !== 'Manager'"><a routerLink="/app/view-inventory"><span class="icon"></span> Inventory</a></li>
+</ul>
+<div class="sidebar-footer">
+<div *ngIf="isLoggedIn" class="user-info">
+<span class="user-greeting">Welcome, {{ userName }}!</span>
+<span class="user-role">Role: {{ userRole }}</span>
+<button (click)="logout()" class="logout-button">Logout</button>
+</div>
+</div>
+</nav>
+<!-- MAIN CONTENT AREA FOR INTERNAL PAGES -->
+<main class="main-content">
+<router-outlet></router-outlet>
+</main>
+</div>

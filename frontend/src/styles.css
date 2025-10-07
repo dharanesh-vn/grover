@@ -1,0 +1,60 @@
+/* Import a clean font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* 
+  Define the color palette as CSS variables for easy reuse.
+*/
+:root {
+  --ivory-white: #FDF7EB;
+  --golden-beige: #F2CE74;
+  --olive-green: #565A3D;
+  --pale-sage: #D7D6A5;
+  --text-dark: #3d402b; /* A darker shade of olive for text */
+  --white: #ffffff;
+  --danger-red: #a94442;
+}
+
+/* 
+  Apply base styles to the entire application.
+*/
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--ivory-white);
+  color: var(--text-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 
+  New: Utility classes for consistent sections and buttons
+*/
+.page-section {
+  max-width: 1100px;
+  margin: 4rem auto;
+  padding: 0 2rem;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: var(--olive-green);
+  margin-bottom: 3rem;
+}
+
+.primary-button {
+  display: inline-block;
+  background-color: var(--golden-beige);
+  color: var(--text-dark);
+  padding: 0.8rem 2rem;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.primary-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}

@@ -1,0 +1,124 @@
+/* Define animations for dynamic effect */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInFromRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Hero Section Styles */
+.hero-section {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  align-items: center;
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 4rem auto 6rem auto;
+  padding: 2rem;
+}
+
+.hero-content {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--olive-green);
+  margin-bottom: 1.5rem;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  color: var(--text-dark);
+  margin-bottom: 2.5rem;
+  max-width: 500px;
+}
+
+.hero-image-container {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+  animation: slideInFromRight 1s ease-out forwards;
+  aspect-ratio: 4 / 3;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease-out;
+}
+
+.hero-image-container:hover .hero-image {
+  transform: scale(1.05);
+}
+
+/* Features Section Styles */
+.features-section {
+  background-color: var(--white);
+  padding: 5rem 2rem;
+  border-radius: 10px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
+}
+
+.feature-card {
+  text-align: center;
+  padding: 2rem;
+  border-radius: 8px;
+  background-color: #fcfcfc;
+  border: 1px solid #f0f0f0;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.feature-title {
+  font-size: 1.5rem;
+  color: var(--olive-green);
+  margin-bottom: 0.5rem;
+}
+
+.feature-description {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 900px) {
+  .hero-section {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 2.5rem;
+  }
+  .hero-image-container {
+    grid-row: 1;
+    aspect-ratio: 16 / 9;
+  }
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  .hero-subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

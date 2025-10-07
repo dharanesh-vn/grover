@@ -1,0 +1,36 @@
+<div class="management-container">
+  <div class="header-bar">
+    <h1>Farm Inventory</h1>
+  </div>
+
+  <div *ngIf="errorMessage" class="general-error-message">{{ errorMessage }}</div>
+  <div *ngIf="isLoading" class="loading-spinner">Loading inventory...</div>
+  <div *ngIf="!isLoading && inventory.length === 0 && !errorMessage" class="no-data">
+    There are currently no items in the inventory.
+  </div>
+
+  <div class="table-container" *ngIf="!isLoading && inventory.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Category</th>
+          <th>Quantity</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of inventory">
+          <td>{{ item.itemName }}</td>
+          <td>{{ item.category }}</td>
+          <td>{{ item.quantity }} {{ item.unit }}</td>
+          <td>
+            <span class="status" [ngClass]="item.quantity > item.lowStockThreshold ? 'in-stock' : 'low-stock'">
+              {{ item.quantity > item.lowStockThreshold ? 'In Stock' : 'Low Stock' }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

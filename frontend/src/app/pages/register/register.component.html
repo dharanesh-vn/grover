@@ -1,0 +1,66 @@
+<div class="form-container">
+  <h2 class="form-title">Create Your Grover Account</h2>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    
+    <div class="form-group">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" formControlName="name" placeholder="e.g., John Doe">
+      <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched" class="error-text">
+        Name is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" formControlName="email" placeholder="e.g., john.doe@example.com">
+      <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error-text">
+        Please enter a valid email.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" formControlName="phone" placeholder="e.g., 1234567890">
+      <div *ngIf="registerForm.get('phone')?.errors?.['required'] && registerForm.get('phone')?.touched" class="error-text">
+        Phone number is required.
+      </div>
+      <!-- New error message for phone format -->
+      <div *ngIf="registerForm.get('phone')?.errors?.['phoneFormat'] && registerForm.get('phone')?.touched" class="error-text">
+        Please enter a valid 10-digit phone number.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" formControlName="password" placeholder="8+ characters with a special symbol">
+      <div *ngIf="registerForm.get('password')?.errors?.['required'] && registerForm.get('password')?.touched" class="error-text">
+        Password is required.
+      </div>
+      <div *ngIf="registerForm.get('password')?.errors?.['minlength'] && registerForm.get('password')?.touched" class="error-text">
+        Password must be at least 8 characters long.
+      </div>
+      <!-- New error message for password strength -->
+      <div *ngIf="registerForm.get('password')?.errors?.['passwordStrength'] && registerForm.get('password')?.touched" class="error-text">
+        Password must contain at least one special character (e.g., !@#$%).
+      </div>
+    </div>
+
+    <div class="form-group">
+        <label for="role">Select Your Role</label>
+        <select id="role" formControlName="role">
+            <option value="Farmer">Farmer</option>
+            <option value="Worker">Worker</option>
+            <option value="Manager">Manager</option>
+        </select>
+    </div>
+
+    <button type="submit" class="submit-button">Create Account</button>
+
+    <div *ngIf="successMessage" class="message success">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="message error">{{ errorMessage }}</div>
+
+    <p class="switch-form-text">
+      Already have an account? <a routerLink="/login">Login here</a>
+    </p>
+  </form>
+</div>

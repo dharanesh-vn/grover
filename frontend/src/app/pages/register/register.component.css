@@ -1,0 +1,107 @@
+.form-container {
+    max-width: 450px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    background-color: var(--white); /* A clean white card */
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+}
+
+.form-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--golden-beige); /* Use the accent color for the title */
+    font-weight: 700;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--olive-green);
+    font-size: 0.9rem;
+}
+
+input, select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--pale-sage); /* Softer border color */
+    border-radius: 5px;
+    box-sizing: border-box; 
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--golden-beige); /* Highlight with the accent color */
+    box-shadow: 0 0 0 3px rgba(242, 206, 116, 0.4);
+}
+
+.submit-button {
+    width: 100%;
+    padding: 0.9rem;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--olive-green); /* Primary action color */
+    color: var(--white);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.submit-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.submit-button:hover:not(:disabled) {
+    background-color: var(--text-dark); /* Slightly darker on hover */
+    transform: translateY(-2px);
+}
+
+.error-text {
+    color: var(--danger-red);
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+}
+
+.message {
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.error {
+    background-color: #ffebee;
+    color: var(--danger-red);
+}
+
+.switch-form-text {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.switch-form-text a {
+    color: var(--olive-green);
+    font-weight: 600;
+    text-decoration: none;
+}
+.switch-form-text a:hover {
+    text-decoration: underline;
+}

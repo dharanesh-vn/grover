@@ -1,0 +1,19 @@
+# Ignore node_modules
+./backend/node_modules
+
+./backend/.env
+
+# Ignore build outputs
+dist/
+build/
+
+# IDE / OS files
+.vscode/
+.DS_Store
+Thumbs.db
+
+
+.vscode
+frontend/node_modules
+backend/node_modules
+backend/.env

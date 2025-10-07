@@ -1,0 +1,95 @@
+<div class="management-container">
+  <div class="header-bar">
+    <h1>Crop Management</h1>
+    <button (click)="showCreateForm()" class="btn-primary">Add New Crop</button>
+  </div>
+
+  <!-- CROP FORM (MODAL) -->
+  <div class="form-overlay" *ngIf="isFormVisible">
+    <div class="form-modal">
+      <h2>{{ isEditing ? 'Edit Crop' : 'Create New Crop' }}</h2>
+      <form [formGroup]="cropForm" (ngSubmit)="onSubmit()">
+        
+        <div *ngIf="formErrorMessage" class="form-error-message">
+          {{ formErrorMessage }}
+        </div>
+
+        <div class="form-group">
+          <label for="cropName">Crop Name</label>
+          <input type="text" id="cropName" formControlName="cropName" placeholder="e.g., Wheat">
+        </div>
+        <div class="form-group">
+          <label for="cropType">Crop Type</label>
+          <input type="text" id="cropType" formControlName="cropType" placeholder="e.g., Cereal">
+        </div>
+        <div class="form-group">
+          <label for="plantingDate">Planting Date</label>
+          <input type="date" id="plantingDate" formControlName="plantingDate" [max]="today">
+          <div *ngIf="cropForm.get('plantingDate')?.errors?.['noFutureDate'] && cropForm.get('plantingDate')?.touched" class="error-text">
+            Planting date cannot be in the future.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="expectedHarvestDate">Expected Harvest Date</label>
+          <input type="date" id="expectedHarvestDate" formControlName="expectedHarvestDate">
+          <div *ngIf="cropForm.get('expectedHarvestDate')?.errors?.['dateRange'] && cropForm.get('expectedHarvestDate')?.touched" class="error-text">
+            Harvest date must be on or after the planting date.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="area">Area (in acres)</label>
+          <input type="number" id="area" formControlName="area" placeholder="e.g., 5.5">
+          <div *ngIf="cropForm.get('area')?.invalid && cropForm.get('area')?.touched" class="error-text">
+            Please enter a valid area.
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="hideForm()">Cancel</button>
+          <button type="submit" class="btn-primary" [disabled]="isSubmitting">
+            {{ isSubmitting ? 'Saving...' : (isEditing ? 'Update' : 'Save') }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- GENERAL ERROR MESSAGE -->
+  <div *ngIf="generalErrorMessage" class="general-error-message">
+    {{ generalErrorMessage }}
+  </div>
+
+  <!-- LOADING AND NO-DATA STATES -->
+  <div *ngIf="isLoading" class="loading-spinner">Loading crops...</div>
+  <div *ngIf="!isLoading && crops.length === 0 && !generalErrorMessage" class="no-data">
+    No crops found. Add a new crop to get started.
+  </div>
+  
+  <!-- CROP LIST TABLE -->
+  <div class="table-container" *ngIf="!isLoading && crops.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Crop Name</th>
+          <th>Type</th>
+          <th>Planting Date</th>
+          <th>Harvest Date</th>
+          <th>Area (acres)</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let crop of crops">
+          <td>{{ crop.cropName }}</td>
+          <td>{{ crop.cropType }}</td>
+          <td>{{ crop.plantingDate | date:'mediumDate' }}</td>
+          <td>{{ crop.expectedHarvestDate | date:'mediumDate' }}</td>
+          <td>{{ crop.area }}</td>
+          <td class="action-buttons">
+            <button class="btn-edit" (click)="showEditForm(crop)">Edit</button>
+            <button class="btn-delete" (click)="onDelete(crop._id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+/* Using styles from management pages for consistency */
+.management-container { max-width: 1200px; margin: 2rem auto; padding: 2rem; background-color: var(--white); border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+.header-bar { margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem; }
+h1 { color: var(--olive-green); margin: 0; }
+.general-error-message { background-color: #f2dede; color: var(--danger-red); padding: 1rem; border-radius: 5px; margin-bottom: 1rem; text-align: center; font-weight: 500; }
+.table-container { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { padding: 0.9rem; text-align: left; border-bottom: 1px solid #eee; }
+thead { background-color: #f9f9f9; }
+th { font-weight: 600; color: var(--olive-green); }
+.no-data, .loading-spinner { text-align: center; padding: 3rem; font-size: 1.2rem; color: #888; }
+.status { padding: 0.3rem 0.7rem; border-radius: 15px; font-weight: 600; font-size: 0.8rem; color: var(--white); }
+.status.in-stock { background-color: #81c784; }
+.status.low-stock { background-color: #f2ce74; color: var(--text-dark); }
