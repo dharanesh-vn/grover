@@ -10,32 +10,35 @@ export class TaskService {
 
   constructor(private http: HttpClient) { }
 
-  // Manager-only: Create a new task
   createTask(taskData: any): Observable<any> {
     return this.http.post(this.apiUrl, taskData);
   }
 
-  // Manager-only: Get all tasks
   getAllTasks(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
 
-  // New: Get tasks for the currently logged-in user
   getMyTasks(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/mytasks`);
   }
 
-  // Manager-only: Full update of a task
   updateTask(id: string, taskData: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/${id}`, taskData);
   }
 
-  // New: Update only the status of a task
   updateTaskStatus(id: string, status: string): Observable<any> {
     return this.http.put(`${this.apiUrl}/${id}/status`, { status });
   }
 
-  // Manager-only: Delete a task
+  // THIS IS THE CRITICAL FIX: This function now calls the correct endpoint
+  completeTaskWithNote(id: string, note: string): Observable<any> {
+    // We now call the /status endpoint, which is accessible to Workers.
+    return this.http.put(`${this.apiUrl}/${id}/status`, { 
+      status: 'Completed', 
+      completionNote: note 
+    });
+  }
+
   deleteTask(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }

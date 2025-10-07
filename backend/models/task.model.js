@@ -10,25 +10,30 @@ const taskSchema = new Schema({
   assignedTo: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: 'User', // Creates a link to a document in the 'User' collection
+    ref: 'User',
   },
   cropId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: 'Crop', // Creates a link to a document in the 'Crop' collection
+    ref: 'Crop',
   },
   status: {
     type: String,
     required: true,
-    enum: ['Pending', 'In Progress', 'Completed'], // Predefined list of valid statuses
+    enum: ['Pending', 'In Progress', 'Completed'],
     default: 'Pending',
   },
   dueDate: {
     type: Date,
     required: [true, 'Due date is required'],
   },
+  // New field to store worker's completion notes
+  completionNote: {
+      type: String,
+      trim: true,
+  }
 }, {
-  timestamps: true, // Automatically adds createdAt and updatedAt fields
+  timestamps: true,
 });
 
 const Task = mongoose.model('Task', taskSchema);

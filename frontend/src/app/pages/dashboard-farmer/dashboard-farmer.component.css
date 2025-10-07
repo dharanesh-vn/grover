@@ -1,3 +1,4 @@
+/* All previous dashboard styles are still valid */
 .dashboard-container { max-width: 1200px; margin: 2rem auto; padding: 2rem; background-color: var(--white); border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
 .dashboard-title { color: var(--olive-green); margin-top: 0; }
 .dashboard-subtitle { font-size: 1.1rem; color: var(--text-dark); }
@@ -8,12 +9,73 @@ th, td { padding: 0.9rem; text-align: left; border-bottom: 1px solid #eee; }
 thead { background-color: #f9f9f9; }
 th { font-weight: 600; color: var(--olive-green); }
 .no-data, .loading-spinner { text-align: center; padding: 3rem; font-size: 1.2rem; color: #888; }
-.status-select {
-  padding: 0.5rem;
+.status-select { padding: 0.5rem; border-radius: 5px; border: 1px solid #ccc; background-color: #f9f9f9; font-family: 'Poppins', sans-serif; font-size: 0.9rem; cursor: pointer; }
+
+/* New Styles for Field Log Section */
+.log-section, .task-section {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #eee;
+}
+.log-section h2, .task-section h2 {
+  color: var(--olive-green);
+  margin-top: 0;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.form-group {
+  margin-bottom: 1rem;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid var(--pale-sage);
   border-radius: 5px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
+  box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
-  font-size: 0.9rem;
+  font-size: 1rem;
+}
+.submit-button {
+  background-color: var(--olive-green);
+  color: var(--white);
+  padding: 0.7rem 1.4rem;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+.submit-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+.submit-button:hover:not(:disabled) {
+  background-color: var(--text-dark);
+}
+.message {
+  padding: 0.8rem;
+  margin-top: 1rem;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: 500;
+}
+.message.success {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+.message.error {
+  background-color: #f2dede;
+  color: var(--danger-red);
+}
+input.ng-invalid.ng-touched, select.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched {
+  border-color: var(--danger-red);
 }

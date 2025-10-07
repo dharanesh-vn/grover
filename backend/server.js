@@ -28,7 +28,9 @@ app.use('/api/weather', require('./routes/weather.routes'));
 app.use('/api/crops', require('./routes/crop.routes'));
 app.use('/api/tasks', require('./routes/task.routes'));
 app.use('/api/users', require('./routes/user.routes'));
-app.use('/api/inventory', require('./routes/inventory.routes')); // Add this new line for inventory
+app.use('/api/inventory', require('./routes/inventory.routes'));
+app.use('/api/fieldlogs', require('./routes/fieldLog.routes.js'));
+app.use('/api/dashboard', require('./routes/dashboard.routes.js')); // Add this new line
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

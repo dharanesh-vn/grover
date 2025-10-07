@@ -9,7 +9,8 @@ import { DashboardWorkerComponent } from './pages/dashboard-worker/dashboard-wor
 import { CropManagementComponent } from './pages/crop-management/crop-management.component';
 import { TaskManagementComponent } from './pages/task-management/task-management.component';
 import { InventoryManagementComponent } from './pages/inventory-management/inventory-management.component';
-import { ViewInventoryComponent } from './pages/view-inventory/view-inventory.component'; // Import the new component
+import { ViewInventoryComponent } from './pages/view-inventory/view-inventory.component';
+import { FieldLogViewerComponent } from './pages/field-log-viewer/field-log-viewer.component'; // Import new component
 import { authGuard } from './guards/auth.guard';
 
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
@@ -37,7 +38,8 @@ export const routes: Routes = [
             { path: 'manage-crops', component: CropManagementComponent },
             { path: 'manage-tasks', component: TaskManagementComponent },
             { path: 'manage-inventory', component: InventoryManagementComponent },
-            { path: 'view-inventory', component: ViewInventoryComponent } // Add the new route
+            { path: 'view-inventory', component: ViewInventoryComponent },
+            { path: 'view-field-logs', component: FieldLogViewerComponent } // Add new route
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full' }

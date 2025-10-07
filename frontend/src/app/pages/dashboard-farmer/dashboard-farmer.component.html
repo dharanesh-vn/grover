@@ -1,37 +1,76 @@
 <div class="dashboard-container">
   <h1 class="dashboard-title">Farmer Dashboard</h1>
-  <p class="dashboard-subtitle">Welcome, {{ userName }}! Here are the tasks assigned to you.</p>
+  <p class="dashboard-subtitle">Welcome, {{ userName }}! Here you can manage tasks and submit field logs.</p>
 
   <div *ngIf="errorMessage" class="general-error-message">{{ errorMessage }}</div>
-  <div *ngIf="isLoading" class="loading-spinner">Loading your tasks...</div>
-  <div *ngIf="!isLoading && myTasks.length === 0 && !errorMessage" class="no-data">
-    You have no tasks assigned. Great job!
+
+  <!-- New Field Log Section -->
+  <div class="log-section">
+    <h2>Submit a Field Log</h2>
+    <form [formGroup]="logForm" (ngSubmit)="onLogSubmit()">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="cropId">Select Crop</label>
+          <select id="cropId" formControlName="cropId">
+            <option value="" disabled>Choose a crop...</option>
+            <option *ngFor="let crop of crops" [value]="crop._id">{{ crop.cropName }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="observationType">Observation Type</label>
+          <select id="observationType" formControlName="observationType">
+            <option>Growth Update</option>
+            <option>Pest Sighting</option>
+            <option>Disease Concern</option>
+            <option>Irrigation Issue</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="notes">Notes</label>
+        <textarea id="notes" formControlName="notes" rows="4" placeholder="Enter your observations here..."></textarea>
+      </div>
+      <button type="submit" class="submit-button" [disabled]="isSubmittingLog">
+        {{ isSubmittingLog ? 'Submitting...' : 'Submit Log' }}
+      </button>
+      <div *ngIf="logSuccessMessage" class="message success">{{ logSuccessMessage }}</div>
+      <div *ngIf="logErrorMessage" class="message error">{{ logErrorMessage }}</div>
+    </form>
   </div>
 
-  <div class="table-container" *ngIf="!isLoading && myTasks.length > 0">
-    <table>
-      <thead>
-        <tr>
-          <th>Task Description</th>
-          <th>Related Crop</th>
-          <th>Due Date</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let task of myTasks">
-          <td>{{ task.taskDescription }}</td>
-          <td>{{ task.cropId?.cropName || 'N/A' }}</td>
-          <td>{{ task.dueDate | date:'mediumDate' }}</td>
-          <td>
-            <select class="status-select" [value]="task.status" (change)="onStatusChange(task._id, $event)">
-              <option value="Pending">Pending</option>
-              <option value="In Progress">In Progress</option>
-              <option value="Completed">Completed</option>
-            </select>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- Existing Task Section -->
+  <div class="task-section">
+    <h2>My Assigned Tasks</h2>
+    <div *ngIf="isLoading" class="loading-spinner">Loading your tasks...</div>
+    <div *ngIf="!isLoading && myTasks.length === 0 && !errorMessage" class="no-data">
+      You have no tasks assigned. Great job!
+    </div>
+    <div class="table-container" *ngIf="!isLoading && myTasks.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>Task Description</th>
+            <th>Related Crop</th>
+            <th>Due Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of myTasks">
+            <td>{{ task.taskDescription }}</td>
+            <td>{{ task.cropId?.cropName || 'N/A' }}</td>
+            <td>{{ task.dueDate | date:'mediumDate' }}</td>
+            <td>
+              <select class="status-select" [value]="task.status" (change)="onStatusChange(task._id, $event)">
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

@@ -1,4 +1,3 @@
-
 .dashboard-container { max-width: 1200px; margin: 2rem auto; padding: 2rem; background-color: var(--white); border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
 .dashboard-title { color: var(--olive-green); margin-top: 0; }
 .dashboard-subtitle { font-size: 1.1rem; color: var(--text-dark); }
@@ -6,27 +5,50 @@
 .no-data, .loading-spinner { text-align: center; padding: 3rem; font-size: 1.2rem; color: #888; }
 .task-list { margin-top: 2rem; display: grid; gap: 1rem; }
 .task-card {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 1.5rem;
-background-color: #f9f9f9;
-border: 1px solid #eee;
-border-radius: 8px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border-left: 5px solid var(--golden-beige); /* Default 'Pending' color */
+  border-radius: 8px;
 }
-.task-details h4 { margin-top: 0; margin-bottom: 0.5rem; color: var(--text-dark); }
+.task-card.in-progress {
+  border-left-color: #64b5f6; /* Blue for 'In Progress' */
+}
+.task-details h4 { margin-top: 0; margin-bottom: 0.5rem; color: var(--text-dark); font-size: 1.1rem; }
 .task-details p { margin: 0.25rem 0; color: #555; }
+.status-badge { font-weight: 600; }
+.task-actions { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.start-button, .complete-button {
+  padding: 0.7rem 1.4rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+}
+.start-button {
+  background-color: #64b5f6; /* Blue */
+  color: var(--white);
+}
+.start-button:hover { background-color: #42a5f5; }
 .complete-button {
-background-color: var(--olive-green);
-color: var(--white);
-padding: 0.7rem 1.4rem;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-font-size: 0.9rem;
-font-weight: 500;
-transition: background-color 0.3s;
+  background-color: var(--olive-green);
+  color: var(--white);
 }
-.complete-button:hover {
-background-color: var(--text-dark);
-}
+.complete-button:hover { background-color: var(--text-dark); }
+
+/* Modal styles (reused from other components) */
+.form-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 2000; }
+.form-modal { background: var(--white); padding: 2rem; border-radius: 8px; width: 90%; max-width: 500px; }
+.form-modal h2 { margin-top: 0; color: var(--golden-beige); }
+.form-modal p { line-height: 1.6; }
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+.form-group textarea { width: 100%; padding: 0.8rem; border: 1px solid var(--pale-sage); border-radius: 5px; box-sizing: border-box; font-family: 'Poppins', sans-serif; font-size: 1rem; }
+.form-actions { margin-top: 1.5rem; display: flex; justify-content: flex-end; gap: 1rem; }
+.btn-secondary { background-color: #f0f0f0; color: #333; padding: 0.7rem 1.4rem; border: 1px solid #ccc; border-radius: 5px; cursor: pointer; }

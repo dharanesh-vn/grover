@@ -39,9 +39,7 @@ const getAllTasks = async (req, res) => {
 // @access  Private
 const getMyTasks = async (req, res) => {
     try {
-        // req.user.id is available from our 'protect' middleware
-        const tasks = await Task.find({ assignedTo: req.user.id })
-            .populate('cropId', 'cropName');
+        const tasks = await Task.find({ assignedTo: req.user.id }).populate('cropId', 'cropName');
         res.json(tasks);
     } catch (error) {
         console.error(error);
@@ -49,11 +47,11 @@ const getMyTasks = async (req, res) => {
     }
 };
 
-// @desc    Update a task's status
+// @desc    Update a task's status (and optionally a completion note)
 // @route   PUT /api/tasks/:id/status
 // @access  Private
 const updateTaskStatus = async (req, res) => {
-    const { status } = req.body;
+    const { status, completionNote } = req.body; // Can now accept completionNote
     const validStatuses = ['Pending', 'In Progress', 'Completed'];
 
     if (!status || !validStatuses.includes(status)) {
@@ -66,12 +64,16 @@ const updateTaskStatus = async (req, res) => {
             return res.status(404).json({ message: 'Task not found' });
         }
 
-        // Security check: Only the assigned user or a manager can update the status
         if (task.assignedTo.toString() !== req.user.id && req.user.role !== 'Manager') {
             return res.status(403).json({ message: 'User not authorized to update this task' });
         }
         
         task.status = status;
+        // If a completion note is provided, save it.
+        if (completionNote !== undefined) {
+            task.completionNote = completionNote;
+        }
+
         const updatedTask = await task.save();
         res.json(updatedTask);
     } catch (error) {
