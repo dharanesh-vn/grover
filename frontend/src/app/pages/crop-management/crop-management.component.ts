@@ -18,13 +18,10 @@ export class CropManagementComponent implements OnInit {
   isFormVisible = false;
   isEditing = false;
   currentCropId: string | null = null;
-  
   isLoading = true;
   isSubmitting = false;
-  
   generalErrorMessage = '';
   formErrorMessage = '';
-
   today: string;
 
   constructor(
@@ -37,15 +34,12 @@ export class CropManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.cropForm = this.fb.group({
-      cropName: ['', Validators.required],
-      cropType: ['', Validators.required],
+      cropName: ['', [Validators.required, CustomValidators.lettersOnly()]],
+      cropType: ['', [Validators.required, CustomValidators.lettersOnly()]],
       plantingDate: ['', [Validators.required, CustomValidators.noFutureDate()]],
-      expectedHarvestDate: ['', Validators.required],
+      expectedHarvestDate: ['', [Validators.required, CustomValidators.dateAfter('plantingDate')]],
       area: ['', [Validators.required, Validators.min(0.1)]]
-    }, {
-      validators: CustomValidators.dateRange('plantingDate', 'expectedHarvestDate')
     });
-
     this.loadCrops();
   }
 
@@ -86,29 +80,18 @@ export class CropManagementComponent implements OnInit {
 
   onSubmit(): void {
     this.cropForm.markAllAsTouched(); 
-
     if (this.cropForm.invalid) {
-      this.formErrorMessage = 'Please correct the errors before submitting.';
+      this.formErrorMessage = 'Please correct all validation errors.';
       return;
     }
-
     this.isSubmitting = true;
     this.formErrorMessage = '';
-
     const operation = this.isEditing && this.currentCropId
       ? this.cropService.updateCrop(this.currentCropId, this.cropForm.value)
       : this.cropService.createCrop(this.cropForm.value);
-
     operation.subscribe({
-      next: () => {
-        this.loadCrops();
-        this.hideForm();
-        this.isSubmitting = false;
-      },
-      error: (err) => {
-        this.formErrorMessage = err.error.message || 'An unexpected error occurred.';
-        this.isSubmitting = false;
-      }
+      next: () => { this.loadCrops(); this.hideForm(); this.isSubmitting = false; },
+      error: (err) => { this.formErrorMessage = err.error.message || 'An unexpected error occurred.'; this.isSubmitting = false; }
     });
   }
 

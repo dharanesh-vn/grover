@@ -1,9 +1,5 @@
 <div class="management-container">
-  <div class="header-bar">
-    <h1>Task Management</h1>
-    <button (click)="showCreateForm()" class="btn-primary">Add New Task</button>
-  </div>
-
+  <div class="header-bar"><h1>Task Management</h1><button (click)="showCreateForm()" class="btn-primary">Add New Task</button></div>
   <div class="form-overlay" *ngIf="isFormVisible">
     <div class="form-modal">
       <h2>{{ isEditing ? 'Edit Task' : 'Create New Task' }}</h2>
@@ -15,29 +11,19 @@
         </div>
         <div class="form-group">
           <label for="assignedTo">Assign To</label>
-          <select id="assignedTo" formControlName="assignedTo">
-            <option value="" disabled>Select a user</option>
-            <option *ngFor="let user of users" [value]="user._id">{{ user.name }} ({{ user.role }})</option>
-          </select>
+          <select id="assignedTo" formControlName="assignedTo"><option value="" disabled>Select a user</option><option *ngFor="let user of users" [value]="user._id">{{ user.name }} ({{ user.role }})</option></select>
         </div>
         <div class="form-group">
           <label for="cropId">Related Crop</label>
-          <select id="cropId" formControlName="cropId">
-            <option value="" disabled>Select a crop</option>
-            <option *ngFor="let crop of crops" [value]="crop._id">{{ crop.cropName }}</option>
-          </select>
+          <select id="cropId" formControlName="cropId"><option value="" disabled>Select a crop</option><option *ngFor="let crop of crops" [value]="crop._id">{{ crop.cropName }}</option></select>
         </div>
         <div class="form-group">
           <label for="status">Status</label>
-          <select id="status" formControlName="status">
-            <option value="Pending">Pending</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Completed">Completed</option>
-          </select>
+          <select id="status" formControlName="status"><option value="Pending">Pending</option><option value="In Progress">In Progress</option><option value="Completed">Completed</option></select>
         </div>
         <div class="form-group">
           <label for="dueDate">Due Date</label>
-          <input type="date" id="dueDate" formControlName="dueDate">
+          <input type="date" id="dueDate" formControlName="dueDate" [min]="today">
         </div>
         <div class="form-actions">
           <button type="button" class="btn-secondary" (click)="hideForm()">Cancel</button>
@@ -46,40 +32,22 @@
       </form>
     </div>
   </div>
-
   <div *ngIf="generalErrorMessage" class="general-error-message">{{ generalErrorMessage }}</div>
   <div *ngIf="isLoading" class="loading-spinner">Loading tasks...</div>
   <div *ngIf="!isLoading && tasks.length === 0 && !generalErrorMessage" class="no-data">No tasks found. Add a new task to get started.</div>
-
   <div class="table-container" *ngIf="!isLoading && tasks.length > 0">
     <table>
       <thead>
         <tr>
-          <th>Description</th>
-          <th>Assigned To</th>
-          <th>Related Crop</th>
-          <th>Due Date</th>
-          <th>Status</th>
-          <th>Actions</th>
+          <th>Description</th><th>Assigned To</th><th>Related Crop</th><th>Due Date</th><th>Status</th><th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let task of tasks">
-          <td>
-            {{ task.taskDescription }}
-            <!-- New: Display completion note if it exists -->
-            <div *ngIf="task.completionNote" class="completion-note">
-              <strong>Note:</strong> {{ task.completionNote }}
-            </div>
-          </td>
-          <td>{{ task.assignedTo?.name || 'N/A' }}</td>
-          <td>{{ task.cropId?.cropName || 'N/A' }}</td>
-          <td>{{ task.dueDate | date:'mediumDate' }}</td>
+          <td>{{ task.taskDescription }}<div *ngIf="task.completionNote" class="completion-note"><strong>Note:</strong> {{ task.completionNote }}</div></td>
+          <td>{{ task.assignedTo?.name || 'N/A' }}</td><td>{{ task.cropId?.cropName || 'N/A' }}</td><td>{{ task.dueDate | date:'mediumDate' }}</td>
           <td><span class="status" [ngClass]="task.status.replace(' ', '-').toLowerCase()">{{ task.status }}</span></td>
-          <td class="action-buttons">
-            <button class="btn-edit" (click)="showEditForm(task)">Edit</button>
-            <button class="btn-delete" (click)="onDelete(task._id)">Delete</button>
-          </td>
+          <td class="action-buttons"><button class="btn-edit" (click)="showEditForm(task)">Edit</button><button class="btn-delete" (click)="onDelete(task._id)">Delete</button></td>
         </tr>
       </tbody>
     </table>

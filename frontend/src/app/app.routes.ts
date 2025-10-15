@@ -10,8 +10,9 @@ import { CropManagementComponent } from './pages/crop-management/crop-management
 import { TaskManagementComponent } from './pages/task-management/task-management.component';
 import { InventoryManagementComponent } from './pages/inventory-management/inventory-management.component';
 import { ViewInventoryComponent } from './pages/view-inventory/view-inventory.component';
-import { FieldLogViewerComponent } from './pages/field-log-viewer/field-log-viewer.component'; // Import new component
+import { FieldLogViewerComponent } from './pages/field-log-viewer/field-log-viewer.component';
 import { authGuard } from './guards/auth.guard';
+import { managerGuard } from './guards/manager-guard'; // Import the new Manager guard
 
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
 import { AppLayoutComponent } from './layouts/app-layout/app-layout.component';
@@ -29,17 +30,21 @@ export const routes: Routes = [
     {
         path: 'app',
         component: AppLayoutComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuard], // This still protects all '/app' routes in general
         children: [
+            // Routes accessible by ANY logged-in user
             { path: 'weather', component: WeatherComponent },
-            { path: 'dashboard-manager', component: DashboardManagerComponent },
             { path: 'dashboard-farmer', component: DashboardFarmerComponent },
             { path: 'dashboard-worker', component: DashboardWorkerComponent },
-            { path: 'manage-crops', component: CropManagementComponent },
-            { path: 'manage-tasks', component: TaskManagementComponent },
-            { path: 'manage-inventory', component: InventoryManagementComponent },
             { path: 'view-inventory', component: ViewInventoryComponent },
-            { path: 'view-field-logs', component: FieldLogViewerComponent } // Add new route
+
+            // --- MANAGER-ONLY ROUTES ---
+            // These routes now have the new, stricter managerGuard
+            { path: 'dashboard-manager', component: DashboardManagerComponent, canActivate: [managerGuard] },
+            { path: 'manage-crops', component: CropManagementComponent, canActivate: [managerGuard] },
+            { path: 'manage-tasks', component: TaskManagementComponent, canActivate: [managerGuard] },
+            { path: 'manage-inventory', component: InventoryManagementComponent, canActivate: [managerGuard] },
+            { path: 'view-field-logs', component: FieldLogViewerComponent, canActivate: [managerGuard] }
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full' }

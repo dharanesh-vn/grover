@@ -17,18 +17,16 @@ import { forkJoin } from 'rxjs';
 export class TaskManagementComponent implements OnInit {
   taskForm!: FormGroup;
   tasks: any[] = [];
-  users: any[] = []; // To populate the 'Assigned To' dropdown
-  crops: any[] = []; // To populate the 'Related Crop' dropdown
-
+  users: any[] = [];
+  crops: any[] = [];
   isFormVisible = false;
   isEditing = false;
   currentTaskId: string | null = null;
-  
   isLoading = true;
   isSubmitting = false;
-  
   generalErrorMessage = '';
   formErrorMessage = '';
+  today: string;
 
   constructor(
     private fb: FormBuilder,
@@ -36,7 +34,9 @@ export class TaskManagementComponent implements OnInit {
     private cropService: CropService,
     private userService: UserService,
     private datePipe: DatePipe
-  ) {}
+  ) {
+    this.today = this.datePipe.transform(new Date(), 'yyyy-MM-dd') || '';
+  }
 
   ngOnInit(): void {
     this.taskForm = this.fb.group({
@@ -46,15 +46,12 @@ export class TaskManagementComponent implements OnInit {
       status: ['Pending', Validators.required],
       dueDate: ['', Validators.required]
     });
-
     this.loadInitialData();
   }
 
   loadInitialData(): void {
     this.isLoading = true;
     this.generalErrorMessage = '';
-
-    // Use forkJoin to fetch all necessary data in parallel
     forkJoin({
       tasks: this.taskService.getAllTasks(),
       users: this.userService.getUsers(),
@@ -78,7 +75,7 @@ export class TaskManagementComponent implements OnInit {
     this.isFormVisible = true;
     this.formErrorMessage = '';
     this.currentTaskId = null;
-    this.taskForm.reset({ status: 'Pending' }); // Reset form with default status
+    this.taskForm.reset({ status: 'Pending' });
   }
 
   showEditForm(task: any): void {
@@ -88,8 +85,8 @@ export class TaskManagementComponent implements OnInit {
     this.currentTaskId = task._id;
     this.taskForm.setValue({
       taskDescription: task.taskDescription,
-      assignedTo: task.assignedTo._id, // Set the ID for the dropdown
-      cropId: task.cropId._id,         // Set the ID for the dropdown
+      assignedTo: task.assignedTo._id,
+      cropId: task.cropId._id,
       status: task.status,
       dueDate: this.datePipe.transform(task.dueDate, 'yyyy-MM-dd')
     });
@@ -105,24 +102,14 @@ export class TaskManagementComponent implements OnInit {
       this.formErrorMessage = 'Please fill out all required fields.';
       return;
     }
-
     this.isSubmitting = true;
     this.formErrorMessage = '';
-
     const operation = this.isEditing && this.currentTaskId
       ? this.taskService.updateTask(this.currentTaskId, this.taskForm.value)
       : this.taskService.createTask(this.taskForm.value);
-
     operation.subscribe({
-      next: () => {
-        this.loadInitialData(); // Reload all data
-        this.hideForm();
-        this.isSubmitting = false;
-      },
-      error: (err) => {
-        this.formErrorMessage = err.error.message || 'An unexpected error occurred.';
-        this.isSubmitting = false;
-      }
+      next: () => { this.loadInitialData(); this.hideForm(); this.isSubmitting = false; },
+      error: (err) => { this.formErrorMessage = err.error.message || 'An unexpected error occurred.'; this.isSubmitting = false; }
     });
   }
 
@@ -130,7 +117,7 @@ export class TaskManagementComponent implements OnInit {
     if (confirm('Are you sure you want to delete this task?')) {
       this.generalErrorMessage = '';
       this.taskService.deleteTask(id).subscribe({
-        next: () => { this.loadInitialData(); }, // Reload all data
+        next: () => { this.loadInitialData(); },
         error: (err) => { this.generalErrorMessage = err.error.message || 'Failed to delete task.'; }
       });
     }
