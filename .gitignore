@@ -17,3 +17,7 @@ Thumbs.db
 frontend/node_modules
 backend/node_modules
 backend/.env
+
+# VS Code specific files - IGNORE THESE
+.vscode/
+*.code-workspace
