@@ -1,6 +1,5 @@
 # Grover - A Smart Agricultural Management System
 
-![Project Status](https://img.shields.io/badge/status-complete-success) 
 Grover is an intelligent, full-stack web application designed to streamline and modernize farm operations. In modern agriculture, efficient coordination between managers and field personnel is crucial for maximizing productivity. This project was built to solve that challenge by providing a centralized platform with distinct, role-based interfaces for every member of the farm team.
 
 From a manager's high-level overview to a worker's specific daily tasks, Grover ensures that everyone has the right tools and information to do their job effectively.
