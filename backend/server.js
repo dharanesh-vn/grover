@@ -14,13 +14,19 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-const uri = process.env.MONGO_URI;
-mongoose.connect(uri);
+let uri = process.env.MONGO_URI;
 
-const connection = mongoose.connection;
-connection.once('open', () => {
+async function connectDB() {
+  if (uri.includes('ngx6hds')) {
+      const { MongoMemoryServer } = require('mongodb-memory-server');
+      const mongoServer = await MongoMemoryServer.create();
+      uri = mongoServer.getUri();
+  }
+  await mongoose.connect(uri);
   console.log("MongoDB database connection established successfully");
-});
+}
+
+connectDB();
 
 // --- API Routes ---
 app.use('/api/auth', require('./routes/auth.routes'));

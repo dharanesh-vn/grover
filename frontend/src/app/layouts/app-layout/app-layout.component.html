@@ -1,25 +1,83 @@
 <div class="app-container">
-<!-- SIDEBAR NAVIGATION FOR INTERNAL PAGES -->
-<nav class="sidebar">
-<div class="sidebar-header">
-<a [routerLink]="dashboardLink || '/app/weather'" class="logo">Grover</a>
-</div>
-<ul class="sidebar-nav-links">
-<li><a [routerLink]="dashboardLink || '/app/weather'"><span class="icon"></span> Dashboard</a></li>
-<li><a routerLink="/app/weather"><span class="icon"></span> Weather</a></li>
-<!-- New Link: Inventory view for non-managers -->
-<li *ngIf="userRole !== 'Manager'"><a routerLink="/app/view-inventory"><span class="icon"></span> Inventory</a></li>
-</ul>
-<div class="sidebar-footer">
-<div *ngIf="isLoggedIn" class="user-info">
-<span class="user-greeting">Welcome, {{ userName }}!</span>
-<span class="user-role">Role: {{ userRole }}</span>
-<button (click)="logout()" class="logout-button">Logout</button>
-</div>
-</div>
-</nav>
-<!-- MAIN CONTENT AREA FOR INTERNAL PAGES -->
-<main class="main-content">
-<router-outlet></router-outlet>
-</main>
+  <!-- SIDEBAR NAVIGATION FOR INTERNAL PAGES -->
+  <nav class="sidebar glass-panel">
+    <div class="sidebar-header">
+      <div class="logo-container">
+        <div class="logo-icon"></div>
+        <a [routerLink]="dashboardLink || '/app/weather'" class="logo">Grover</a>
+      </div>
+    </div>
+    
+    <ul class="sidebar-nav-links">
+      <!-- DASHBOARD - Available to ALL roles -->
+      <li>
+        <a [routerLink]="dashboardLink || '/app/weather'" routerLinkActive="active">
+          <i data-lucide="layout-dashboard"></i> Dashboard
+        </a>
+      </li>
+
+      <!-- WEATHER - Available to ALL roles -->
+      <li>
+        <a routerLink="/app/weather" routerLinkActive="active">
+          <i data-lucide="cloud-sun"></i> Weather
+        </a>
+      </li>
+
+      <!-- CROPS - Admin Full, Agronomist Read-Only -->
+      <li *ngIf="userRole === 'Admin'">
+        <a routerLink="/app/manage-crops" routerLinkActive="active">
+          <i data-lucide="sprout"></i> Crops
+        </a>
+      </li>
+
+      <!-- INVENTORY - Admin Full, Others View Only -->
+      <li *ngIf="userRole === 'Admin'">
+        <a routerLink="/app/manage-inventory" routerLinkActive="active">
+          <i data-lucide="boxes"></i> Inventory
+        </a>
+      </li>
+      <li *ngIf="userRole === 'Agronomist' || userRole === 'Operator'">
+        <a routerLink="/app/view-inventory" routerLinkActive="active">
+          <i data-lucide="package-search"></i> View Inventory
+        </a>
+      </li>
+
+      <!-- TASKS - Admin Manage, Others View My Tasks (on dashboard) -->
+      <li *ngIf="userRole === 'Admin'">
+        <a routerLink="/app/manage-tasks" routerLinkActive="active">
+          <i data-lucide="list-checks"></i> Manage Tasks
+        </a>
+      </li>
+
+      <!-- FIELD LOGS - Admin View All, Agronomist Submit (on dashboard) -->
+      <li *ngIf="userRole === 'Admin'">
+        <a routerLink="/app/view-field-logs" routerLinkActive="active">
+          <i data-lucide="file-text"></i> Audit Logs
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <div *ngIf="isLoggedIn" class="user-info">
+        <div class="user-avatar">{{ userName?.charAt(0)?.toUpperCase() || 'U' }}</div>
+        <div class="user-details">
+          <span class="user-greeting">{{ userName }}</span>
+          <span class="user-role">{{ userRole }}</span>
+        </div>
+      </div>
+      <button (click)="logout()" class="logout-button">
+        <i data-lucide="log-out"></i> Logout
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT AREA FOR INTERNAL PAGES -->
+  <main class="main-content">
+    <div class="top-nav glass-panel">
+      <div class="date-display">{{ currentDate | date:'fullDate' }}</div>
+    </div>
+    <div class="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
 </div>

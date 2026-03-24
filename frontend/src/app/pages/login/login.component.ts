@@ -36,12 +36,12 @@ export class LoginComponent implements OnInit {
         this.authService.storeUserData(response.token, response.user);
         
         const user = response.user;
-        if (user.role === 'Manager') {
-          this.router.navigate(['/app/dashboard-manager']);
-        } else if (user.role === 'Farmer') {
-          this.router.navigate(['/app/dashboard-farmer']);
-        } else if (user.role === 'Worker') {
-          this.router.navigate(['/app/dashboard-worker']);
+        if (user.role === 'Admin') {
+          this.router.navigate(['/app/dashboard-admin']);
+        } else if (user.role === 'Agronomist') {
+          this.router.navigate(['/app/dashboard-agronomist']);
+        } else if (user.role === 'Operator') {
+          this.router.navigate(['/app/dashboard-operator']);
         } else {
           this.router.navigate(['/app/weather']);
         }

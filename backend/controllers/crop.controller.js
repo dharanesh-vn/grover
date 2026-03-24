@@ -2,7 +2,7 @@ const Crop = require('../models/crop.model');
 
 // @desc    Create a new crop
 // @route   POST /api/crops
-// @access  Private/Manager
+// @access  Private/Admin
 const createCrop = async (req, res) => {
     const { cropName, cropType, plantingDate, expectedHarvestDate, area } = req.body;
 
@@ -17,7 +17,7 @@ const createCrop = async (req, res) => {
             plantingDate,
             expectedHarvestDate,
             area,
-            managedBy: req.user.id // Assign the logged-in manager
+            managedBy: req.user.id // Assign the logged-in admin
         });
 
         const createdCrop = await crop.save();
@@ -33,7 +33,7 @@ const createCrop = async (req, res) => {
 // @access  Private
 const getAllCrops = async (req, res) => {
     try {
-        const crops = await Crop.find({}).populate('managedBy', 'name'); // Populate manager's name
+        const crops = await Crop.find({}).populate('managedBy', 'name'); // Populate admin's name
         res.json(crops);
     } catch (error) {
         console.error(error);
@@ -61,7 +61,7 @@ const getCropById = async (req, res) => {
 
 // @desc    Update a crop
 // @route   PUT /api/crops/:id
-// @access  Private/Manager
+// @access  Private/Admin
 const updateCrop = async (req, res) => {
     const { cropName, cropType, plantingDate, expectedHarvestDate, area } = req.body;
 
@@ -88,7 +88,7 @@ const updateCrop = async (req, res) => {
 
 // @desc    Delete a crop
 // @route   DELETE /api/crops/:id
-// @access  Private/Manager
+// @access  Private/Admin
 const deleteCrop = async (req, res) => {
     try {
         const crop = await Crop.findById(req.params.id);

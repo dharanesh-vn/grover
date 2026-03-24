@@ -3,16 +3,18 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { WeatherComponent } from './pages/weather/weather.component';
-import { DashboardManagerComponent } from './pages/dashboard-manager/dashboard-manager.component';
-import { DashboardFarmerComponent } from './pages/dashboard-farmer/dashboard-farmer.component';
-import { DashboardWorkerComponent } from './pages/dashboard-worker/dashboard-worker.component';
+import { DashboardManagerComponent } from './pages/dashboard-admin/dashboard-admin.component';
+import { DashboardFarmerComponent } from './pages/dashboard-agronomist/dashboard-agronomist.component';
+import { DashboardWorkerComponent } from './pages/dashboard-operator/dashboard-operator.component';
 import { CropManagementComponent } from './pages/crop-management/crop-management.component';
 import { TaskManagementComponent } from './pages/task-management/task-management.component';
 import { InventoryManagementComponent } from './pages/inventory-management/inventory-management.component';
 import { ViewInventoryComponent } from './pages/view-inventory/view-inventory.component';
 import { FieldLogViewerComponent } from './pages/field-log-viewer/field-log-viewer.component';
 import { authGuard } from './guards/auth.guard';
-import { managerGuard } from './guards/manager-guard'; // Import the new Manager guard
+import { managerGuard } from './guards/admin-guard'; // Import the new Admin guard
+import { agronomistGuard } from './guards/agronomist.guard';
+import { operatorGuard } from './guards/operator.guard';
 
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
 import { AppLayoutComponent } from './layouts/app-layout/app-layout.component';
@@ -34,13 +36,13 @@ export const routes: Routes = [
         children: [
             // Routes accessible by ANY logged-in user
             { path: 'weather', component: WeatherComponent },
-            { path: 'dashboard-farmer', component: DashboardFarmerComponent },
-            { path: 'dashboard-worker', component: DashboardWorkerComponent },
+            { path: 'dashboard-agronomist', component: DashboardFarmerComponent, canActivate: [agronomistGuard] },
+            { path: 'dashboard-operator', component: DashboardWorkerComponent, canActivate: [operatorGuard] },
             { path: 'view-inventory', component: ViewInventoryComponent },
 
             // --- MANAGER-ONLY ROUTES ---
             // These routes now have the new, stricter managerGuard
-            { path: 'dashboard-manager', component: DashboardManagerComponent, canActivate: [managerGuard] },
+            { path: 'dashboard-admin', component: DashboardManagerComponent, canActivate: [managerGuard] },
             { path: 'manage-crops', component: CropManagementComponent, canActivate: [managerGuard] },
             { path: 'manage-tasks', component: TaskManagementComponent, canActivate: [managerGuard] },
             { path: 'manage-inventory', component: InventoryManagementComponent, canActivate: [managerGuard] },

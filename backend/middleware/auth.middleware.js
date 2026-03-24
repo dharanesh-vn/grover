@@ -28,10 +28,10 @@ const protect = async (req, res, next) => {
 };
 
 const isManager = (req, res, next) => {
-    if (req.user && req.user.role === 'Manager') {
+    if (req.user && req.user.role === 'Admin') {
         next();
     } else {
-        res.status(403).json({ message: 'Access denied. Manager role required.' });
+        res.status(403).json({ message: 'Access denied. Admin role required.' });
     }
 };
 

@@ -5,12 +5,12 @@ import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-dashboard-worker',
+  selector: 'app-dashboard-operator',
   standalone: true,
   imports: [CommonModule, DatePipe, ReactiveFormsModule],
   providers: [DatePipe],
-  templateUrl: './dashboard-worker.component.html',
-  styleUrls: ['./dashboard-worker.component.css']
+  templateUrl: './dashboard-operator.component.html',
+  styleUrls: ['./dashboard-operator.component.css']
 })
 export class DashboardWorkerComponent implements OnInit {
   myTasks: any[] = [];
@@ -30,7 +30,7 @@ export class DashboardWorkerComponent implements OnInit {
 
   ngOnInit(): void {
     const currentUser = this.authService.getCurrentUser();
-    this.userName = currentUser ? currentUser.name : 'Worker';
+    this.userName = currentUser ? currentUser.name : 'Operator';
 
     this.completionForm = this.fb.group({
       completionNote: ['']

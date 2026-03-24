@@ -24,8 +24,8 @@ const userSchema = new Schema({
   role: {
     type: String,
     required: true,
-    enum: ['Manager', 'Farmer', 'Worker'], // Ensures role can only be one of these values
-    default: 'Farmer'
+    enum: ['Admin', 'Agronomist', 'Operator'], // Ensures role can only be one of these values
+    default: 'Agronomist'
   },
   phone: {
       type: String,

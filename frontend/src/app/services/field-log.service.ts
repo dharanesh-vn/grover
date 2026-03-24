@@ -15,7 +15,7 @@ export class FieldLogService {
     return this.http.post(this.apiUrl, logData);
   }
 
-  // Get all field logs (for Manager)
+  // Get all field logs (for Admin)
   getAllFieldLogs(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }

@@ -27,7 +27,7 @@ const taskSchema = new Schema({
     type: Date,
     required: [true, 'Due date is required'],
   },
-  // New field to store worker's completion notes
+  // New field to store operator's completion notes
   completionNote: {
       type: String,
       trim: true,

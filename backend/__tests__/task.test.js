@@ -45,15 +45,15 @@ beforeAll(async () => {
   cropId = new mongoose.Types.ObjectId();
 
   // Create tokens for the different roles using their real IDs
-  managerToken = jwt.sign({ user: { id: managerId, role: 'Manager' } }, process.env.JWT_SECRET);
-  farmerToken = jwt.sign({ user: { id: farmerId, role: 'Farmer' } }, process.env.JWT_SECRET);
-  workerToken = jwt.sign({ user: { id: workerId, role: 'Worker' } }, process.env.JWT_SECRET);
+  managerToken = jwt.sign({ user: { id: managerId, role: 'Admin' } }, process.env.JWT_SECRET);
+  farmerToken = jwt.sign({ user: { id: farmerId, role: 'Agronomist' } }, process.env.JWT_SECRET);
+  workerToken = jwt.sign({ user: { id: workerId, role: 'Operator' } }, process.env.JWT_SECRET);
 
   // Create the actual user documents in the test database
   await User.create([
-    { _id: managerId, name: 'Test Manager', email: 'manager@test.com', password: 'password', phone: '1234567890', role: 'Manager' },
-    { _id: farmerId, name: 'Test Farmer', email: 'farmer@test.com', password: 'password', phone: '1234567890', role: 'Farmer' },
-    { _id: workerId, name: 'Test Worker', email: 'worker@test.com', password: 'password', phone: '1234567890', role: 'Worker' }
+    { _id: managerId, name: 'Test Admin', email: 'admin@test.com', password: 'password', phone: '1234567890', role: 'Admin' },
+    { _id: farmerId, name: 'Test Agronomist', email: 'agronomist@test.com', password: 'password', phone: '1234567890', role: 'Agronomist' },
+    { _id: workerId, name: 'Test Operator', email: 'operator@test.com', password: 'password', phone: '1234567890', role: 'Operator' }
   ]);
   
   await Crop.create({ _id: cropId, cropName: 'Test Crop', cropType: 'Test', plantingDate: new Date(), expectedHarvestDate: new Date(), area: 1 });
@@ -70,7 +70,7 @@ beforeEach(async () => {
 
 describe('Task Routes - Complex Role Logic', () => {
 
-  it('should allow a Manager to create a task for a Farmer', async () => {
+  it('should allow a Admin to create a task for a Agronomist', async () => {
     const response = await request(app)
       .post('/api/tasks')
       .set('Authorization', `Bearer ${managerToken}`)
@@ -84,9 +84,9 @@ describe('Task Routes - Complex Role Logic', () => {
     expect(response.body.taskDescription).toBe('Water the fields');
   });
 
-  it('should allow a Farmer to get ONLY their own tasks via /mytasks', async () => {
-    await Task.create({ taskDescription: 'Farmer Task', assignedTo: farmerId, cropId: cropId, dueDate: new Date() });
-    await Task.create({ taskDescription: 'Worker Task', assignedTo: workerId, cropId: cropId, dueDate: new Date() });
+  it('should allow a Agronomist to get ONLY their own tasks via /mytasks', async () => {
+    await Task.create({ taskDescription: 'Agronomist Task', assignedTo: farmerId, cropId: cropId, dueDate: new Date() });
+    await Task.create({ taskDescription: 'Operator Task', assignedTo: workerId, cropId: cropId, dueDate: new Date() });
     
     const response = await request(app)
       .get('/api/tasks/mytasks')
@@ -94,10 +94,10 @@ describe('Task Routes - Complex Role Logic', () => {
       
     expect(response.status).toBe(200);
     expect(response.body.length).toBe(1);
-    expect(response.body[0].taskDescription).toBe('Farmer Task');
+    expect(response.body[0].taskDescription).toBe('Agronomist Task');
   });
 
-  it('should allow a Farmer to update the status of their OWN task', async () => {
+  it('should allow a Agronomist to update the status of their OWN task', async () => {
     const task = await Task.create({ taskDescription: 'Fertilize', assignedTo: farmerId, cropId: cropId, dueDate: new Date() });
     const response = await request(app)
       .put(`/api/tasks/${task._id}/status`)
@@ -108,8 +108,8 @@ describe('Task Routes - Complex Role Logic', () => {
     expect(response.body.status).toBe('Completed');
   });
 
-  it('should FORBID a Farmer from updating the status of ANOTHER user\'s task', async () => {
-    const task = await Task.create({ taskDescription: 'Worker Task to be Hacked', assignedTo: workerId, cropId: cropId, dueDate: new Date() });
+  it('should FORBID a Agronomist from updating the status of ANOTHER user\'s task', async () => {
+    const task = await Task.create({ taskDescription: 'Operator Task to be Hacked', assignedTo: workerId, cropId: cropId, dueDate: new Date() });
     const response = await request(app)
       .put(`/api/tasks/${task._id}/status`)
       .set('Authorization', `Bearer ${farmerToken}`)

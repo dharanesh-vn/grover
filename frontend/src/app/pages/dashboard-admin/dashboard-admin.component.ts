@@ -4,11 +4,11 @@ import { RouterLink } from '@angular/router';
 import { DashboardService } from '../../services/dashboard.service';
 
 @Component({
-  selector: 'app-dashboard-manager',
+  selector: 'app-dashboard-admin',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './dashboard-manager.component.html',
-  styleUrls: ['./dashboard-manager.component.css']
+  templateUrl: './dashboard-admin.component.html',
+  styleUrls: ['./dashboard-admin.component.css']
 })
 export class DashboardManagerComponent implements OnInit {
   stats: any = null;

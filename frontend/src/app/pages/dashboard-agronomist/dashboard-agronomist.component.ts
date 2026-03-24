@@ -8,12 +8,12 @@ import { CropService } from '../../services/crop.service';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-dashboard-farmer',
+  selector: 'app-dashboard-agronomist',
   standalone: true,
   imports: [CommonModule, DatePipe, ReactiveFormsModule],
   providers: [DatePipe],
-  templateUrl: './dashboard-farmer.component.html',
-  styleUrls: ['./dashboard-farmer.component.css']
+  templateUrl: './dashboard-agronomist.component.html',
+  styleUrls: ['./dashboard-agronomist.component.css']
 })
 export class DashboardFarmerComponent implements OnInit {
   myTasks: any[] = [];
@@ -37,7 +37,7 @@ export class DashboardFarmerComponent implements OnInit {
 
   ngOnInit(): void {
     const currentUser = this.authService.getCurrentUser();
-    this.userName = currentUser ? currentUser.name : 'Farmer';
+    this.userName = currentUser ? currentUser.name : 'Agronomist';
     
     // Initialize the new Field Log form
     this.logForm = this.fb.group({

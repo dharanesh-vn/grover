@@ -43,13 +43,13 @@ beforeAll(async () => {
   farmerId = new mongoose.Types.ObjectId();
 
   // Create tokens for the different roles using their real IDs
-  managerToken = jwt.sign({ user: { id: managerId, role: 'Manager' } }, process.env.JWT_SECRET);
-  farmerToken = jwt.sign({ user: { id: farmerId, role: 'Farmer' } }, process.env.JWT_SECRET);
+  managerToken = jwt.sign({ user: { id: managerId, role: 'Admin' } }, process.env.JWT_SECRET);
+  farmerToken = jwt.sign({ user: { id: farmerId, role: 'Agronomist' } }, process.env.JWT_SECRET);
   
   // Create the actual user documents in the test database
   await User.create([
-      { _id: managerId, name: 'Test Manager', email: 'manager-crop@test.com', password: 'password', phone: '1234567890', role: 'Manager' },
-      { _id: farmerId, name: 'Test Farmer', email: 'farmer-crop@test.com', password: 'password', phone: '1234567890', role: 'Farmer' }
+      { _id: managerId, name: 'Test Admin', email: 'admin-crop@test.com', password: 'password', phone: '1234567890', role: 'Admin' },
+      { _id: farmerId, name: 'Test Agronomist', email: 'agronomist-crop@test.com', password: 'password', phone: '1234567890', role: 'Agronomist' }
   ]);
 });
 
@@ -64,7 +64,7 @@ beforeEach(async () => {
 
 describe('Crop Routes - Security and CRUD', () => {
 
-  it('should allow a Manager to create a crop', async () => {
+  it('should allow a Admin to create a crop', async () => {
     const response = await request(app)
       .post('/api/crops')
       .set('Authorization', `Bearer ${managerToken}`)
@@ -79,7 +79,7 @@ describe('Crop Routes - Security and CRUD', () => {
     expect(response.body.cropName).toBe('Corn');
   });
 
-  it('should FORBID a Farmer from creating a crop', async () => {
+  it('should FORBID a Agronomist from creating a crop', async () => {
     const response = await request(app)
       .post('/api/crops')
       .set('Authorization', `Bearer ${farmerToken}`)
@@ -97,7 +97,7 @@ describe('Crop Routes - Security and CRUD', () => {
     expect(response.body[0].cropName).toBe('Wheat');
   });
 
-  it('should FORBID a Farmer from deleting a crop', async () => {
+  it('should FORBID a Agronomist from deleting a crop', async () => {
     const crop = await Crop.create({ cropName: 'Carrot', cropType: 'Vegetable', plantingDate: '2025-03-01', expectedHarvestDate: '2025-06-01', area: 2 });
     const response = await request(app)
       .delete(`/api/crops/${crop._id}`)
@@ -105,7 +105,7 @@ describe('Crop Routes - Security and CRUD', () => {
     expect(response.status).toBe(403);
   });
 
-  it('should allow a Manager to delete a crop', async () => {
+  it('should allow a Admin to delete a crop', async () => {
     const crop = await Crop.create({ cropName: 'Potato', cropType: 'Vegetable', plantingDate: '2025-04-01', expectedHarvestDate: '2025-07-01', area: 5 });
     const response = await request(app)
       .delete(`/api/crops/${crop._id}`)

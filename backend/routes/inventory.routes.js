@@ -8,12 +8,12 @@ const {
 } = require('../controllers/inventory.controller');
 const { protect, isManager } = require('../middleware/auth.middleware');
 
-// Route to get all items (for any logged-in user) and create a new item (Managers only)
+// Route to get all items (for any logged-in user) and create a new item (Admins only)
 router.route('/')
   .get(protect, getAllItems)
   .post(protect, isManager, createItem);
 
-// Routes for single item operations (update, delete - Managers only)
+// Routes for single item operations (update, delete - Admins only)
 router.route('/:id')
   .put(protect, isManager, updateItem)
   .delete(protect, isManager, deleteItem);

@@ -32,7 +32,7 @@ export class TaskService {
 
   // THIS IS THE CRITICAL FIX: This function now calls the correct endpoint
   completeTaskWithNote(id: string, note: string): Observable<any> {
-    // We now call the /status endpoint, which is accessible to Workers.
+    // We now call the /status endpoint, which is accessible to Operators.
     return this.http.put(`${this.apiUrl}/${id}/status`, { 
       status: 'Completed', 
       completionNote: note 

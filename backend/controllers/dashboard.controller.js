@@ -5,7 +5,7 @@ const FieldLog = require('../models/fieldLog.model');
 
 // @desc    Get dashboard summary statistics
 // @route   GET /api/dashboard/stats
-// @access  Private/Manager
+// @access  Private/Admin
 const getDashboardStats = async (req, res) => {
     try {
         // Run all database queries in parallel for efficiency

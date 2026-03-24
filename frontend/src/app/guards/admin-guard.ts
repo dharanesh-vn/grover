@@ -14,15 +14,15 @@ export const managerGuard: CanActivateFn = (route, state) => {
 
   // Next, get the current user and check their role.
   const user = authService.getCurrentUser();
-  if (user && user.role === 'Manager') {
-    return true; // The user is a Manager, allow access.
+  if (user && user.role === 'Admin') {
+    return true; // The user is a Admin, allow access.
   } else {
-    // The user is logged in but is NOT a Manager. Block access.
-    alert('Access Denied: This page is for Managers only.'); // Show a clear message
+    // The user is logged in but is NOT a Admin. Block access.
+    alert('Access Denied: This page is for Admins only.'); // Show a clear message
     
     // Redirect them to their own dashboard or a safe default.
     const userRole = user ? user.role.toLowerCase() : '';
-    if (userRole === 'farmer' || userRole === 'worker') {
+    if (userRole === 'agronomist' || userRole === 'operator') {
       router.navigate([`/app/dashboard-${userRole}`]);
     } else {
       router.navigate(['/app/weather']); // Fallback for any unexpected case

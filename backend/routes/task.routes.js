@@ -13,7 +13,7 @@ const { protect, isManager } = require('../middleware/auth.middleware');
 // Route for a user to get their own tasks
 router.route('/mytasks').get(protect, getMyTasks);
 
-// Route to get all tasks (for Managers) and create a new task (for Managers)
+// Route to get all tasks (for Admins) and create a new task (for Admins)
 router.route('/')
   .get(protect, isManager, getAllTasks)
   .post(protect, isManager, createTask);
@@ -21,7 +21,7 @@ router.route('/')
 // Route for any logged-in user to update a task's status
 router.route('/:id/status').put(protect, updateTaskStatus);
 
-// Routes for full task updates and deletion (for Managers only)
+// Routes for full task updates and deletion (for Admins only)
 router.route('/:id')
   .put(protect, isManager, updateTask)
   .delete(protect, isManager, deleteTask);

@@ -10,7 +10,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  // Gets a list of assignable users (Farmers and Workers)
+  // Gets a list of assignable users (Agronomists and Operators)
   getUsers(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }

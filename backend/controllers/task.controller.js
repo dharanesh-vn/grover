@@ -4,7 +4,7 @@ const Crop = require('../models/crop.model');
 
 // @desc    Create a new task
 // @route   POST /api/tasks
-// @access  Private/Manager
+// @access  Private/Admin
 const createTask = async (req, res) => {
   const { taskDescription, assignedTo, cropId, status, dueDate } = req.body;
   if (!taskDescription || !assignedTo || !cropId || !dueDate) { return res.status(400).json({ message: 'Please provide all required fields' }); }
@@ -64,7 +64,7 @@ const updateTaskStatus = async (req, res) => {
             return res.status(404).json({ message: 'Task not found' });
         }
 
-        if (task.assignedTo.toString() !== req.user.id && req.user.role !== 'Manager') {
+        if (task.assignedTo.toString() !== req.user.id && req.user.role !== 'Admin') {
             return res.status(403).json({ message: 'User not authorized to update this task' });
         }
         
@@ -82,9 +82,9 @@ const updateTaskStatus = async (req, res) => {
     }
 };
 
-// @desc    Update a task (Manager only)
+// @desc    Update a task (Admin only)
 // @route   PUT /api/tasks/:id
-// @access  Private/Manager
+// @access  Private/Admin
 const updateTask = async (req, res) => {
   const { taskDescription, assignedTo, cropId, status, dueDate } = req.body;
   try {
@@ -108,7 +108,7 @@ const updateTask = async (req, res) => {
 
 // @desc    Delete a task
 // @route   DELETE /api/tasks/:id
-// @access  Private/Manager
+// @access  Private/Admin
 const deleteTask = async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);

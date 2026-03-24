@@ -2,7 +2,7 @@ const Inventory = require('../models/inventory.model');
 
 // @desc    Create a new inventory item
 // @route   POST /api/inventory
-// @access  Private/Manager
+// @access  Private/Admin
 const createItem = async (req, res) => {
   const { itemName, category, quantity, unit, lowStockThreshold } = req.body;
 
@@ -47,7 +47,7 @@ const getAllItems = async (req, res) => {
 
 // @desc    Update an inventory item
 // @route   PUT /api/inventory/:id
-// @access  Private/Manager
+// @access  Private/Admin
 const updateItem = async (req, res) => {
   const { itemName, category, quantity, unit, lowStockThreshold } = req.body;
 
@@ -74,7 +74,7 @@ const updateItem = async (req, res) => {
 
 // @desc    Delete an inventory item
 // @route   DELETE /api/inventory/:id
-// @access  Private/Manager
+// @access  Private/Admin
 const deleteItem = async (req, res) => {
   try {
     const item = await Inventory.findById(req.params.id);

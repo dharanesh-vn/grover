@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, CustomValidators.phoneFormat()]],
       password: ['', [Validators.required, Validators.minLength(8), CustomValidators.passwordStrength()]],
-      role: ['Farmer', Validators.required]
+      role: ['Agronomist', Validators.required]
     });
   }
 

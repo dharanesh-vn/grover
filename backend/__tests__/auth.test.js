@@ -36,7 +36,7 @@ describe('Auth Controller - White-Box Tests', () => {
       email: 'wbt1@grover.com',
       password: 'Password@123',
       phone: '1234567890',
-      role: 'Farmer',
+      role: 'Agronomist',
     };
     console.log('INPUT DATA:', userData);
 
@@ -53,7 +53,7 @@ describe('Auth Controller - White-Box Tests', () => {
 
   test('WBT-02: Should fail to register if email already exists', async () => {
     console.log('\n--- RUNNING WBT-02: Testing Duplicate Email Branch ---');
-    const existingUser = new User({ name: 'Existing User', email: 'wbt2@grover.com', password: 'Password@123', phone: '1112223334', role: 'Worker' });
+    const existingUser = new User({ name: 'Existing User', email: 'wbt2@grover.com', password: 'Password@123', phone: '1112223334', role: 'Operator' });
     await existingUser.save();
     console.log('SETUP: Pre-existing user created in database.');
 
@@ -62,7 +62,7 @@ describe('Auth Controller - White-Box Tests', () => {
       email: 'wbt2@grover.com',
       password: 'Password@456',
       phone: '9876543210',
-      role: 'Farmer',
+      role: 'Agronomist',
     };
     console.log('INPUT DATA:', duplicateUserData);
     
@@ -85,7 +85,7 @@ describe('Auth Controller - White-Box Tests', () => {
         email: 'wbt3@grover.com',
         password: '123',
         phone: '1234567890',
-        role: 'Farmer',
+        role: 'Agronomist',
       });
     expect(response.status).toBe(400);
     expect(response.body.message).toBe('Password must be at least 8 characters long.');
@@ -99,7 +99,7 @@ describe('Auth Controller - White-Box Tests', () => {
         email: 'wbt4@grover.com',
         password: 'Password@123',
         phone: '1234567890',
-        role: 'Farmer',
+        role: 'Agronomist',
       });
     expect(response.status).toBe(400);
     expect(response.body.message).toBe('Please enter all required fields.');
@@ -109,7 +109,7 @@ describe('Auth Controller - White-Box Tests', () => {
     beforeEach(async () => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash('Password@123', salt);
-        const user = new User({ name: 'Login User', email: 'login@grover.com', password: hashedPassword, phone: '5556667778', role: 'Farmer' });
+        const user = new User({ name: 'Login User', email: 'login@grover.com', password: hashedPassword, phone: '5556667778', role: 'Agronomist' });
         await user.save();
     });
 
