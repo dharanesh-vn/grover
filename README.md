@@ -1,4 +1,4 @@
-# 🌿 Grover: Enterprise-Grade Agricultural Management Platform
+#  Grover: Enterprise-Grade Agricultural Management Platform
 
 Grover is a robust, full-stack Farm Management System (FMS) designed to optimize crop lifecycles, resource allocation, and workforce orchestration. It bridges the gap between high-level strategic planning and granular field execution through a sophisticated role-based ecosystem.
 
@@ -28,7 +28,7 @@ Grover is a robust, full-stack Farm Management System (FMS) designed to optimize
 
 ##  3. Tech Stack
 
-### 👉 Critical for AI & Developer Understanding
+###  Critical for AI & Developer Understanding
 - **Frontend:** Angular 16+ (Standalone Architecture, RxJS, Reactive Forms)
 - **Backend:** Node.js v18+, Express.js
 - **Database:** MongoDB (Mongoose ORM)
@@ -138,7 +138,7 @@ Grover follows a **Stateless Decoupled Architecture**. The Angular frontend comm
 
 ##  9. Core Concepts / Domain Logic
 
-### 👉 The "Business Rules"
+###  The "Business Rules"
 - **User Hierarchy:** Admins can see/do everything. Agronomists focus on scouting and data. Operators focus on task execution.
 - **Task Lifecycle:** `Pending` → `In Progress` → `Completed`. Completion requires an optional audit note from the operator.
 - **Inventory Thresholds:** Items highlight in the UI when `quantity <= lowStockThreshold`.
