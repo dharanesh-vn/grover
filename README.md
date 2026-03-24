@@ -4,7 +4,7 @@ Grover is a robust, full-stack Farm Management System (FMS) designed to optimize
 
 ---
 
-## 🚀 1. Project Description
+##  1. Project Description
 **Grover** solves the coordination challenges faced by modern large-scale farms. By providing specialized interfaces for Admins, Agronomists, and Operators, it ensures that data flows seamlessly from the office to the field and back. 
 
 ### Real-World Use Cases:
@@ -14,7 +14,7 @@ Grover is a robust, full-stack Farm Management System (FMS) designed to optimize
 
 ---
 
-## ✨ 2. Features
+##  2. Features
 - **Strict Role-Based Access Control (RBAC):** Improved dynamic sidebar that only displays sections reachable by the authenticated role.
 - **Modern UI Suite:** Integrated **Lucide Icons** and ultra-modern glassmorphism design.
 - **Crop Lifecycle Management:** Complete tracking from planting to harvest.
@@ -26,7 +26,7 @@ Grover is a robust, full-stack Farm Management System (FMS) designed to optimize
 
 ---
 
-## 🛠️ 3. Tech Stack
+##  3. Tech Stack
 
 ### 👉 Critical for AI & Developer Understanding
 - **Frontend:** Angular 16+ (Standalone Architecture, RxJS, Reactive Forms)
@@ -38,7 +38,7 @@ Grover is a robust, full-stack Farm Management System (FMS) designed to optimize
 
 ---
 
-## ⚙️ 4. Installation
+##  4. Installation
 
 ### Prerequisites
 - **Node.js:** v18.16.0 or higher
@@ -65,7 +65,7 @@ Grover is a robust, full-stack Farm Management System (FMS) designed to optimize
 
 ---
 
-## 🏃 5. Usage
+##  5. Usage
 
 ### Launching the Application
 1. **Start the Backend:**
@@ -90,7 +90,7 @@ Grover is a robust, full-stack Farm Management System (FMS) designed to optimize
 
 ---
 
-## 🔑 6. Configuration
+##  6. Configuration
 Create a `.env` file in the `backend/` directory:
 ```env
 PORT=5000
@@ -101,9 +101,9 @@ WEATHER_API_KEY=your_openweathermap_32_char_key
 
 ---
 
-## 📂 7. Project Structure
+##  7. Project Structure
 
-### 👉 Critical for AI Comprehension
+###  Critical for AI Comprehension
 ```text
 grover/
 ├── backend/
@@ -123,7 +123,7 @@ grover/
 
 ---
 
-## 🏗️ 8. Architecture Overview
+##  8. Architecture Overview
 
 ### High-Level Design
 Grover follows a **Stateless Decoupled Architecture**. The Angular frontend communicates with the Node.js backend solely through a secure REST API.
@@ -136,7 +136,7 @@ Grover follows a **Stateless Decoupled Architecture**. The Angular frontend comm
 
 ---
 
-## 🧩 9. Core Concepts / Domain Logic
+##  9. Core Concepts / Domain Logic
 
 ### 👉 The "Business Rules"
 - **User Hierarchy:** Admins can see/do everything. Agronomists focus on scouting and data. Operators focus on task execution.
@@ -146,7 +146,7 @@ Grover follows a **Stateless Decoupled Architecture**. The Angular frontend comm
 
 ---
 
-## 📡 10. API Documentation
+##  10. API Documentation
 
 ### Auth Endpoints
 - `POST /api/auth/register` - Create new user
@@ -163,7 +163,7 @@ Grover follows a **Stateless Decoupled Architecture**. The Angular frontend comm
 
 ---
 
-## 📊 11. Data Models / Schema
+##  11. Data Models / Schema
 
 ### User Object
 ```javascript
@@ -189,7 +189,7 @@ Grover follows a **Stateless Decoupled Architecture**. The Angular frontend comm
 
 ---
 
-## 🔗 12. Dependencies & External Services
+##  12. Dependencies & External Services
 - **OpenWeatherMap API:** Used for real-time field weather condition tracking.
 - **Axios:** Backend HTTP client for API communication.
 - **Express-CORS:** Cross-origin resource sharing for frontend integration.
@@ -197,13 +197,10 @@ Grover follows a **Stateless Decoupled Architecture**. The Angular frontend comm
 
 ---
 
-## ⚠️ 13. Known Limitations / Assumptions
+##  13. Known Limitations / Assumptions
 - **Weather API:** Requires a valid 32-character OpenWeatherMap key. If the key is invalid, the system falls back to professional mock data to maintain dashboard integrity during demos.
 - **Concurrency:** Designed for standard farm operations; not optimized for sub-millisecond high-frequency trading of commodities.
 - **Storage:** Images for crops or inventory are currently handled as text/links; direct binary upload is planned for the v2 roadmap.
 
----
 
-**Author:** [Dharanesh VN](https://github.com/dharanesh-vn)  
-**License:** MIT  
-**Support:** For issues, please open a ticket on the GitHub repository page.
+
